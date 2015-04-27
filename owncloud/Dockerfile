@@ -19,5 +19,5 @@ RUN chmod +x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
 #########################################
 ##         EXPORTS AND VOLUMES         ##
 #########################################
-VOLUME ["/var/www/owncloud/data"]
+VOLUME ["/var/www/owncloud/data","/data"]
 EXPOSE 8000 8001
