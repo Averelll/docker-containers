@@ -7,10 +7,11 @@ OWNCLOUD_VERSION="8.0.2"
 
 # Configure user nobody to match unRAID's settings
 export DEBIAN_FRONTEND="noninteractive"
-usermod -u 99 nobody
-usermod -g 100 nobody
-usermod -d /home nobody
-chown -R nobody:users /home
+# usermod -u 99 nobody
+# usermod -g 100 nobody
+adduser averell
+usermod -d /home averell
+chown -R averell:averell /home
 
 # Disable SSH
 rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
@@ -104,7 +105,7 @@ if [[ -d /var/www/owncloud/config ]]; then
   ln -sf /var/www/owncloud/data/config/ /var/www/owncloud/config
 fi
 
-chown -R nobody:users /var/www/owncloud
+chown -R averell:averell /var/www/owncloud
 EOT
 
 #PHP-FPM config
@@ -113,8 +114,8 @@ cat <<'EOT' > /etc/php5/fpm/pool.d/www.conf
 daemonize = no
 
 [www]
-user = nobody
-group = users
+user = averell
+group = averell
 listen = /var/run/php5-fpm.sock
 listen.mode = 0666
 pm = dynamic
@@ -130,7 +131,7 @@ EOT
 
 # NGINX config
 cat <<'EOT' > /etc/nginx/nginx.conf
-user nobody users;
+user averell averell;
 daemon off;
 worker_processes 4;
 pid /run/nginx.pid;
